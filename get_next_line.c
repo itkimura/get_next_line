@@ -6,45 +6,39 @@
 /*   By: itkimura <itkimura@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:40:12 by itkimura          #+#    #+#             */
-/*   Updated: 2021/12/07 16:28:09 by itkimura         ###   ########.fr       */
+/*   Updated: 2021/12/08 17:33:49 by itkimura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-char	*read_file(const int fd, char **line)
-{
-	char	*buff;
-	int		byte;
-
-	buff = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1));
-	if (!buff)
-		return (0);
-	byte = 1;
-	while (ft_strchr(, '\n') != 0 && byte)
-	{
-		byte = read (fd, &buff, BUFF_SIZE);
-		if (byte == NULL)
-		{
-			free(buff);
-			return (0);
-		}
-		buff[byte] = '\0';
-	}
-	return (buff);
-}
-
 int	get_next_line(const int fd, char **line)
 {
-
-	if (fd < 0 || BUFF_SIZE <= 0)
-		return (0);
-	line = read_file(fd, line);
-	if (str == NULL)
-		return (0);
-	return (1);
+	int			ret; /*return of read, -1: error 0:EOF Positive number:How many byte have been read*/
+	char		buff[BUFF_SIZE + 2];
+	static char		*str[1000];
+	char		*s;
+	printf("fd = %d, BUFF_SIZE = %d\n", fd, BUFF_SIZE);
+	if (fd < 0 || line == 0)
+		return (-1);
+	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
+	{
+		printf("ret = %d\n", ret);
+		if (str[fd] == 0)
+			str[fd] = ft_strnew(1);
+		buff[ret] = '\0';
+		s = ft_strjoin(str[fd], (char *)buff);
+		free(str[fd]);
+		str[fd] = s;
+		if (ft_strchr(str[fd], '\n'))
+			break;
+	}
+	return (0);
 }
+
+#include <fcntl.h>
+#include <sys/stat.h>
 
 int main(int argc, char *argv[])
 {
