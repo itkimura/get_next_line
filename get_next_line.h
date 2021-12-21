@@ -6,7 +6,7 @@
 /*   By: itkimura <itkimura@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:57:04 by itkimura          #+#    #+#             */
-/*   Updated: 2021/12/12 14:57:04 by itkimura         ###   ########.fr       */
+/*   Updated: 2021/12/15 15:35:25 by itkimura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 ** The hard limit is the maximum value that is allowed for the soft limit. Any changes to the hard limit require root access.
 **The soft limit is the value that Linux uses to limit the system resources for running processes. The soft limit cannot be greater than the hard limit.
 */
-# define BUFF_SIZE 10000
+# define BUFF_SIZE 32
 # define MAX_FD 256
 # include "libft/libft.h"
 

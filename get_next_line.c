@@ -6,15 +6,11 @@
 /*   By: itkimura <itkimura@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 19:44:39 by itkimura          #+#    #+#             */
-/*   Updated: 2021/12/12 14:48:31 by itkimura         ###   ########.fr       */
+/*   Updated: 2021/12/15 16:04:11 by itkimura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-
-#include <fcntl.h>
-#include <sys/stat.h>
 
 /*
 **copy_line finds the first \n or \0
@@ -65,6 +61,15 @@ static int	cpy_line(const int fd, char **line, char **stack)
 /* 
 ** return of read, -1: error 0:EOF  n > 0:How many byte have been read
 */
+int	status_return(int ret, const int fd, char **line, char **stack)
+{
+	if (ret < 0)
+		return (-1);
+	else if (ret == 0 && stack[fd] == 0)
+		return (0);
+	else
+		return (cpy_line(fd, line, stack));
+}
 
 int	get_next_line(const int fd, char **line)
 {
@@ -75,9 +80,11 @@ int	get_next_line(const int fd, char **line)
 
 	if ((fd < 0 || fd > MAX_FD) || line == 0)
 		return (-1);
-	ret = read(fd, heap, BUFF_SIZE);
-	while (ret > 0)
+	while (1)
 	{
+		ret = read(fd, heap, BUFF_SIZE);
+		if (ret <= 0)
+			break ;
 		heap[ret] = '\0';
 		if (stack[fd] == 0)
 			stack[fd] = ft_strnew(1);
@@ -87,53 +94,5 @@ int	get_next_line(const int fd, char **line)
 		if (ft_strchr(stack[fd], '\n'))
 			break ;
 	}
-	if (ret < 0)
-		return (-1);
-	else if (ret == 0 && stack[fd] == 0)
-		return (0);
-	else
-		return (cpy_line(fd, line, stack));
+	return (status_return(ret, fd, line, stack));
 }
-/*
-#include <string.h>
-
-int main(int argc, char **argv)
-{
-	int		fd;
-	char	*line;
-	int		status;
-	int		count;
-	int		i;
-
-	fd = 0;
-	count = 0;
-	i = 1;
-	while (i < argc)
-	{
-		fd = open(argv[i], O_RDONLY);
-		if (fd < 0)
-			return (0);
-		printf("\x1b[33m[START] file name:\t%s\t", argv[i]);
-		if (strlen(argv[i]) < 7)
-			printf("\t");
-		printf("fd:\t%d\n\033[m", fd);
-		do{
-			count++;
-			status = get_next_line(fd, &line);
-			if (status == 1)
-			{
-				printf("status:%d\tline[%d]: %s\n", status, count, line);
-				free(line);
-			}
-		}while (status == 1);
-		printf("\x1b[36m[FINISH] file name:\t%s\t", argv[i]);
-		if (strlen(argv[i]) < 7)
-			printf("\t");
-		printf("status: %d\n\033[m", status);
-		close(fd);
-		i++;
-		if (i != argc)
-			printf("\n");
-	}
-}
-*/
