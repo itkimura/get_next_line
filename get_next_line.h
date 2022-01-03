@@ -6,7 +6,7 @@
 /*   By: itkimura <itkimura@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:57:04 by itkimura          #+#    #+#             */
-/*   Updated: 2021/12/15 15:35:25 by itkimura         ###   ########.fr       */
+/*   Updated: 2022/01/03 22:19:59 by itkimura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,15 @@
 ** Find the max number of files:
 ** Mac: launchctl limit maxfiles
 ** Linux: ulimit -n / -Hn / -Sn / -aH
-** The hard limit is the maximum value that is allowed for the soft limit. Any changes to the hard limit require root access.
-**The soft limit is the value that Linux uses to limit the system resources for running processes. The soft limit cannot be greater than the hard limit.
+** The hard limit is the maximum value that is allowed for the soft limit
+** Any changes to the hard limit require root access.
+** The soft limit is the value that Linux uses to limit
+** the system resources for running processes.
+** The soft limit cannot be greater than the hard limit.
 */
-# define BUFF_SIZE 32
-# define MAX_FD 256
+# define BUFF_SIZE 10000
+# define MAX_FD 4096
+
 # include "libft/libft.h"
 
 int	get_next_line(const int fd, char **line);

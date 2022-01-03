@@ -6,7 +6,7 @@
 /*   By: itkimura <itkimura@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 19:44:39 by itkimura          #+#    #+#             */
-/*   Updated: 2021/12/15 16:04:11 by itkimura         ###   ########.fr       */
+/*   Updated: 2022/01/03 14:01:51 by itkimura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	cpy_line(const int fd, char **line, char **stack)
 /* 
 ** return of read, -1: error 0:EOF  n > 0:How many byte have been read
 */
-int	status_return(int ret, const int fd, char **line, char **stack)
+static int	status_return(int ret, const int fd, char **line, char **stack)
 {
 	if (ret < 0)
 		return (-1);
@@ -75,22 +75,25 @@ int	get_next_line(const int fd, char **line)
 {
 	int			ret;
 	static char	*stack[MAX_FD];
-	char		heap[BUFF_SIZE + 1];
+	char		buffer[BUFF_SIZE + 1];
 	char		*tmp;
 
-	if ((fd < 0 || fd > MAX_FD) || line == 0)
+	if (fd < 0 || line == 0)
 		return (-1);
 	while (1)
 	{
-		ret = read(fd, heap, BUFF_SIZE);
+		ret = read(fd, buffer, BUFF_SIZE);
 		if (ret <= 0)
 			break ;
-		heap[ret] = '\0';
-		if (stack[fd] == 0)
-			stack[fd] = ft_strnew(1);
-		tmp = ft_strjoin(stack[fd], heap);
-		free(stack[fd]);
-		stack[fd] = tmp;
+		buffer[ret] = '\0';
+		if (stack[fd] == NULL)
+			stack[fd] = ft_strdup(buffer);
+		else
+		{
+			tmp = ft_strjoin(stack[fd], buffer);
+			free(stack[fd]);
+			stack[fd] = tmp;
+		}
 		if (ft_strchr(stack[fd], '\n'))
 			break ;
 	}

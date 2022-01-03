@@ -32,9 +32,9 @@ int main(int argc, char **argv)
 			status = get_next_line(fd, &line);
 			if (status == 1)
 			{
-				printf("status:%d\tline[%d]: %s\n", status, count, line);
-				free(line);
-			}
+				printf("return:%d\tline[%d]: %s\n", status, count, line);
+/*				free(line);
+*/			}
 		}while (status == 1);
 		printf("\x1b[36m[FINISH] line = %s\nfile name:\t%s\t", line, argv[i]);
 		if (strlen(argv[i]) < 7)
@@ -44,5 +44,6 @@ int main(int argc, char **argv)
 		i++;
 		if (i != argc)
 			printf("\n");
+		count = 0;
 	}
 }
