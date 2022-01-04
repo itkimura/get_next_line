@@ -5,6 +5,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <string.h>
+#include <stdlib.h>
 
 int main(int argc, char **argv)
 {
@@ -17,7 +18,6 @@ int main(int argc, char **argv)
 	fd = 0;
 	count = 0;
 	i = 1;
-	line = 0;
 	while (i < argc)
 	{
 		fd = open(argv[i], O_RDONLY);
@@ -29,6 +29,7 @@ int main(int argc, char **argv)
 		printf("fd:\t%d\n\033[m", fd);
 		do{
 			count++;
+			line = 0;
 			status = get_next_line(fd, &line);
 			if (status == 1)
 			{
@@ -39,7 +40,8 @@ int main(int argc, char **argv)
 		printf("\x1b[36m[FINISH] line = %s\nfile name:\t%s\t", line, argv[i]);
 		if (strlen(argv[i]) < 7)
 			printf("\t");
-		printf("status: %d\n\033[m", status);
+		printf("status: %d\n\033[m\n", status);
+		/*system("leaks a.out");*/
 		close(fd);
 		i++;
 		if (i != argc)
