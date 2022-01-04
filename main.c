@@ -29,19 +29,19 @@ int main(int argc, char **argv)
 		printf("fd:\t%d\n\033[m", fd);
 		do{
 			count++;
-			line = 0;
 			status = get_next_line(fd, &line);
 			if (status == 1)
 			{
 				printf("return:%d\tline[%d]: %s\n", status, count, line);
-/*				free(line);
-*/			}
+				free(line);
+			}
 		}while (status == 1);
+		line = 0;
 		printf("\x1b[36m[FINISH] line = %s\nfile name:\t%s\t", line, argv[i]);
 		if (strlen(argv[i]) < 7)
 			printf("\t");
 		printf("status: %d\n\033[m\n", status);
-		/*system("leaks a.out");*/
+		system("leaks a.out");
 		close(fd);
 		i++;
 		if (i != argc)
