@@ -6,7 +6,7 @@
 /*   By: itkimura <itkimura@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:57:04 by itkimura          #+#    #+#             */
-/*   Updated: 2021/12/30 13:11:55 by itkimura         ###   ########.fr       */
+/*   Updated: 2022/01/07 12:30:47 by itkimura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 ** the system resources for running processes.
 ** The soft limit cannot be greater than the hard limit.
 */
-# define BUFF_SIZE 32
+# define BUFF_SIZE 8
 # define MAX_FD 4096
 # include "libft/libft.h"
 
