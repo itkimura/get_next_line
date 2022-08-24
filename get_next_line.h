@@ -6,7 +6,7 @@
 /*   By: itkimura <itkimura@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 13:57:04 by itkimura          #+#    #+#             */
-/*   Updated: 2022/01/07 12:30:47 by itkimura         ###   ########.fr       */
+/*   Updated: 2022/08/24 14:11:26 by itkimura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 */
 # define BUFF_SIZE 8
 # define MAX_FD 4096
-# include "libft/libft.h"
+# include "libft.h"
 
 int	get_next_line(const int fd, char **line);
 
