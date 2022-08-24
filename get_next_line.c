@@ -6,7 +6,7 @@
 /*   By: itkimura <itkimura@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 19:44:39 by itkimura          #+#    #+#             */
-/*   Updated: 2022/01/04 17:09:52 by itkimura         ###   ########.fr       */
+/*   Updated: 2022/08/24 13:22:11 by itkimura         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int	get_next_line(const int fd, char **line)
 
 	if (fd < 0 || line == 0)
 		return (-1);
+	if (stack[fd] && ft_strchr(stack[fd], '\n'))
+		return (cpy_line(fd, line,stack));
 	while (1)
 	{
 		ret = read(fd, buffer, BUFF_SIZE);
